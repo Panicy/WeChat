@@ -100,7 +100,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        title: Text('微信'),
+        title: Text('微信',style:TextStyle(
+          color: Color(AppColors.AppBarTextColors),
+          fontSize: 16.0
+
+        )),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
