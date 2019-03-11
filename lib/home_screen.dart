@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'contants.dart' show Constants,AppColors;
 import './Pages/PageList.dart';
+import './pages/wechat_page.dart';
 
 /*定义底部导航*/
 class NavigationIconView{
@@ -36,9 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
       super.initState();
       _pageController=PageController(initialPage: _currentIndex);
       _pages=[
-        Container(
-          child: Text('1'),
-        ),
+       WeChatViewDemo(),
         Container(
           child: Text('2'),
         ),
