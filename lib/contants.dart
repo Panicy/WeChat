@@ -11,10 +11,27 @@ class AppColors{
 }
 
 
-class TextStyle{
-
-
-   
+class AppTextStyle{
+  static const ListBgColor=0xffFFFFFF;
+  static const ListTopBgColor=0xffECECEC;//好友置顶背景颜色
+  static const ListTextColor= TextStyle(//好友最后一条消息颜色
+    color:Color(0xffD1D1D1),
+    fontSize: 12.0,
+    
+  );
+  static const ListTileStyle= TextStyle(//好友昵称颜色
+    fontSize: 18.0,
+    color: Color(0xff353535),
+    fontWeight: FontWeight.bold
+  );
+  static const ListNewColor=TextStyle(//公众号及其他昵称颜色
+    color: Color(0xffD9CAC3),
+    fontSize: 20.0
+    );
+   static const ListTime=TextStyle(
+     color: Color(0xffD1D1D1),
+     fontSize: 12.0
+   );
 }
 
 

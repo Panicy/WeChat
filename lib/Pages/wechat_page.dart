@@ -1,37 +1,45 @@
 import 'package:flutter/material.dart';
+import '../contants.dart' show AppTextStyle, AppColors;
+import '../model/wechat_data.dart';
 
+class Wechat extends StatelessWidget {
+  
+  const Wechat({Key key,this.conversation})
+  :assert(conversation !=null);
 
-class wechat extends StatelessWidget {
-  final Widget child;
-  wechat({Key key, this.child}) : super(key: key);
+  final Conversation conversation;
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(15.0),
       decoration: BoxDecoration(
-        color: Colors.blue
+        color: Color(AppTextStyle.ListBgColor),
+        border: Border(top: BorderSide(width: 1.0,color: Color(AppColors.AppBarColor))),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Image.asset('assets/images/ic_public_account.png',width: 50.0,),
+          Container(
+            child: Image.asset(conversation.img,width: 50.0,height: 50.0,),
           ),
+          Container(width: 20.0,),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text('asddsasd',),
-                Text('asddsasd'),
+                Text(conversation.title,style: AppTextStyle.ListTileStyle,textDirection: TextDirection.rtl,),
+                Text(conversation.text,style: AppTextStyle.ListTextColor,maxLines: 1,overflow: TextOverflow.ellipsis,),
               ],
             ),
           ),
-          Container(
-            child: Text('昨天'),
-            width: 50.0,
+          Column( 
+            children: <Widget>[
+              Text(conversation.time,style: AppTextStyle.ListTime,),
+            ],
           )
         ],
-      ),
+        ),
     );
   }
 }
@@ -48,8 +56,11 @@ class WeChatViewDemo extends StatefulWidget {
 class _WeChatViewDemoState extends State<WeChatViewDemo> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-       child: wechat(),
+    return ListView.builder(
+      itemBuilder: (BuildContext context,int index){
+        return Wechat(conversation: mockConversations[index],);
+      },
+      itemCount: mockConversations.length,
     );
   }
 }
