@@ -28,8 +28,18 @@ class AppTextStyle{
     color: Color(0xffD9CAC3),
     fontSize: 20.0
     );
-   static const ListTime=TextStyle(
+   static const ListTime=TextStyle( //列表时间样式
      color: Color(0xffD1D1D1),
+     fontSize: 12.0
+   );
+   static const ListImgWidth=40.0;//头像宽度
+   static const ListImgHeight=40.0;//头像高度
+   static const MesBgColor=0xffFF0329;//消息背景
+   static const MesText=0xffFFFFFF;//消息数量
+   static const MesWidth=20.0;//消息数量宽度
+   static const MesRadius=20.0;//消息数量圆角
+   static const MesStyle=TextStyle( //消息数量样式
+     color: Color(MesText),
      fontSize: 12.0
    );
 }

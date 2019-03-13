@@ -10,8 +10,72 @@ class Wechat extends StatelessWidget {
   final Conversation conversation;
   @override
   Widget build(BuildContext context) {
+    Widget img; //定义用户头像组件
+    if(conversation.isAvatarFromNet()){
+      img=Image.network(conversation.img,
+        width: AppTextStyle.ListImgWidth,
+        height: AppTextStyle.ListImgHeight,
+      );
+    }else{
+      img=Image.asset(conversation.img,
+         width: AppTextStyle.ListImgWidth,
+        height: AppTextStyle.ListImgHeight,
+        );
+    }
+
+    Widget imgNumWidgt;
+    if(conversation.mesnum>=1 && conversation.mesnum<=99){
+      //定义消息数量组件
+        Widget mesNum=Container(
+          height: AppTextStyle.MesWidth,
+          width: AppTextStyle.MesWidth,
+          alignment:Alignment.center,
+          decoration: BoxDecoration(
+            borderRadius:BorderRadius.circular(AppTextStyle.MesRadius),
+            color: Color(AppTextStyle.MesBgColor)
+          ),
+          child: Text('99',style:AppTextStyle.MesStyle),
+        );
+
+        //消息与头像重叠
+        imgNumWidgt=Stack(
+          overflow: Overflow.visible,//超出 显示
+          children: <Widget>[
+            img,
+            Positioned(
+              right: -6.0,
+              top: -6.0,
+              child: mesNum,
+            )
+          ],
+        );
+    }else if(conversation.mesnum==0){
+      imgNumWidgt=img;
+    }else{
+      imgNumWidgt=Stack(
+          overflow: Overflow.visible,//超出 显示
+          children: <Widget>[
+            img,
+            Positioned(
+              right: -6.0,
+              top: -6.0,
+              child: Container(
+                width: AppTextStyle.MesWidth/1.5,
+                height: AppTextStyle.MesWidth/1.5,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(AppTextStyle.MesRadius),
+                  color: Color(AppTextStyle.MesBgColor)
+                ),
+              ),
+            )
+          ],
+        );
+    }
+    
+
+
     return Container(
-      padding: EdgeInsets.all(15.0),
+      padding: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         color: Color(AppTextStyle.ListBgColor),
         border: Border(top: BorderSide(width: 1.0,color: Color(AppColors.AppBarColor))),
@@ -19,9 +83,7 @@ class Wechat extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Container(
-            child: Image.asset(conversation.img,width: 50.0,height: 50.0,),
-          ),
+          imgNumWidgt,
           Container(width: 20.0,),
           Expanded(
             child: Column(

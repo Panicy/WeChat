@@ -26,6 +26,13 @@ final int titleColor;
 final int mesnum;
 final bool isRed;
 final bool isTop;
+
+bool isAvatarFromNet(){//判断头像是否来自网络
+  if(this.img.indexOf('http')==0 || this.img.indexOf('https')==0){
+    return true;
+  }
+  return false;
+}
 }
 
 const List<Conversation> mockConversations=[
@@ -54,7 +61,7 @@ const List<Conversation> mockConversations=[
       text: '今晚要一起去吃肯德基吗？',
       time: '17:56',
       isMute: true,
-      mesnum: 0,
+      mesnum: 100,
       isTop: true
     ),
     const Conversation(
