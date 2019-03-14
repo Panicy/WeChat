@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../contants.dart' show AppTextStyle, AppColors;
+import '../contants.dart' show AppTextStyle, AppColors,Constants;
 import '../model/wechat_data.dart';
 
 class Wechat extends StatelessWidget {
@@ -34,7 +34,7 @@ class Wechat extends StatelessWidget {
             borderRadius:BorderRadius.circular(AppTextStyle.MesRadius),
             color: Color(AppTextStyle.MesBgColor)
           ),
-          child: Text('99',style:AppTextStyle.MesStyle),
+          child: Text(conversation.mesnum.toString(),style:AppTextStyle.MesStyle),
         );
 
         //消息与头像重叠
@@ -71,8 +71,39 @@ class Wechat extends StatelessWidget {
           ],
         );
     }
+
+
+    
+    //消息免打扰
     
 
+    var _notMes=<Widget>[
+        Text(conversation.time,style: AppTextStyle.ListTime,),
+        SizedBox(height: 10.0,),
+    ];
+    if(conversation.isMute){
+      _notMes.add(
+        Icon(
+          IconData(
+            0xe60e,
+            fontFamily: Constants.IconFontFamily
+          ),
+          size: AppTextStyle.MuteIconSize,
+          color: Color(AppTextStyle.MuteIconBg),
+        )
+      );
+    }else{
+      _notMes.add(
+        Icon(
+          IconData(
+            0xe60e,
+            fontFamily: Constants.IconFontFamily
+          ),
+          size: AppTextStyle.MuteIconSize,
+          color:Colors.transparent,//透明颜色
+        )
+      );
+    }
 
     return Container(
       padding: EdgeInsets.all(10.0),
@@ -84,21 +115,20 @@ class Wechat extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           imgNumWidgt,
-          Container(width: 20.0,),
+          Container(width: 10.0,),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(conversation.title,style: AppTextStyle.ListTileStyle,textDirection: TextDirection.rtl,),
+                Text(conversation.title,style: AppTextStyle.ListTileStyle,),
+                SizedBox(height: 8.0,),
                 Text(conversation.text,style: AppTextStyle.ListTextColor,maxLines: 1,overflow: TextOverflow.ellipsis,),
               ],
             ),
           ),
           Column( 
-            children: <Widget>[
-              Text(conversation.time,style: AppTextStyle.ListTime,),
-            ],
+            children:_notMes,
           )
         ],
         ),
@@ -120,9 +150,21 @@ class _WeChatViewDemoState extends State<WeChatViewDemo> {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemBuilder: (BuildContext context,int index){
+        if(index==0){
+          return TopList();
+        }
         return Wechat(conversation: mockConversations[index],);
       },
       itemCount: mockConversations.length,
+    );
+  }
+}
+
+class TopList extends StatelessWidget{
+  Widget build(BuildContext context){
+    return Container(
+      height: 20.0,
+      color: Colors.blue,
     );
   }
 }

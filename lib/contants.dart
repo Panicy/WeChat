@@ -20,13 +20,13 @@ class AppTextStyle{
     
   );
   static const ListTileStyle= TextStyle(//好友昵称颜色
-    fontSize: 18.0,
+    fontSize: 16.0,
     color: Color(0xff353535),
-    fontWeight: FontWeight.bold
+    fontWeight: FontWeight.w500
   );
   static const ListNewColor=TextStyle(//公众号及其他昵称颜色
     color: Color(0xffD9CAC3),
-    fontSize: 20.0
+    fontSize: 16.0
     );
    static const ListTime=TextStyle( //列表时间样式
      color: Color(0xffD1D1D1),
@@ -42,6 +42,8 @@ class AppTextStyle{
      color: Color(MesText),
      fontSize: 12.0
    );
+   static const MuteIconBg=0xffECECEC;
+   static const MuteIconSize=18.0;
 }
 
 

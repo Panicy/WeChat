@@ -11,7 +11,7 @@ class Conversation{
     this.time,
     this.mesnum:0,
     this.isRed,
-    this.isTop
+    this.isTop:false
   })  : assert(img !=null),
       assert(title !=null),
       assert(time !=null);
