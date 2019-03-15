@@ -151,7 +151,7 @@ class _WeChatViewDemoState extends State<WeChatViewDemo> {
     return ListView.builder(
       itemBuilder: (BuildContext context,int index){
         if(index==0){
-          return TopList();
+          return _TopList();
         }
         return Wechat(conversation: mockConversations[index],);
       },
@@ -160,11 +160,39 @@ class _WeChatViewDemoState extends State<WeChatViewDemo> {
   }
 }
 
-class TopList extends StatelessWidget{
+
+class _TopList extends StatelessWidget{
+   const _TopList({  
+      this.device=Device.Win
+    }):assert(device !=null);
+
+    final Device device;
+    int get iconName{
+      return device == Device.Win?0xe631:0xe641;
+    }
+    String get deviceName{
+      return device == Device.Win? 'Windows': 'Mac';
+    }
+  @override
   Widget build(BuildContext context){
     return Container(
-      height: 20.0,
-      color: Colors.blue,
+      color: Color(AppColors.AppBarColor),
+      padding: EdgeInsets.all(10.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(width: 10.0),
+          Icon(
+            IconData(
+              iconName,
+              fontFamily: Constants.IconFontFamily
+            ),
+          ),
+          SizedBox(width: 10.0),
+          Text( '$deviceName 已登录')
+        ],
+      ),
     );
   }
 }

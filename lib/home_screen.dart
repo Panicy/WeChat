@@ -52,44 +52,44 @@ class _HomeScreenState extends State<HomeScreen> {
         NavigationIconView(
           title: '微信',
           icon:IconData(
-            0xe6ae,
+            0xe61c,
             fontFamily: Constants.IconFontFamily,
           ),
           activeIcon: IconData(
-            0xe60e,
+            0xe61d,
             fontFamily:Constants.IconFontFamily,
           )
         ),
         NavigationIconView(
           title: '通讯录',
           icon:IconData(
-            0xe625,
+            0xe601,
             fontFamily:Constants.IconFontFamily,
           ),
           activeIcon:IconData(
-            0xe62a,
+            0xe600,
             fontFamily:Constants.IconFontFamily,
           )
         ),
         NavigationIconView(
           title: '发现',
           icon: IconData(
-            0xe732,
+            0xe657,
             fontFamily:Constants.IconFontFamily,
           ),
           activeIcon: IconData(
-            0xe746,
+            0xe655,
             fontFamily:Constants.IconFontFamily,
           )
         ),
         NavigationIconView(
           title: '我',
           icon:IconData(
-            0xe646,
+            0xe606,
             fontFamily:Constants.IconFontFamily,
           ),
           activeIcon: IconData(
-            0xe634,
+            0xe607,
             fontFamily:Constants.IconFontFamily,
           )
         ),

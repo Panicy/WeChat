@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import '../contants.dart' show AppColors;
 
+enum Device{
+  Win,Mac
+}
+
 class Conversation{
   const Conversation({
     @required this.img,
