@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'contants.dart' show Constants,AppColors;
-import './Pages/PageList.dart';
 import './pages/wechat_page.dart';
+import './pages/wechabook.dart';
+
 
 /*定义底部导航*/
 class NavigationIconView{
@@ -38,9 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _pageController=PageController(initialPage: _currentIndex);
       _pages=[
        WeChatViewDemo(),
-        Container(
-          child: Text('2'),
-        ),
+       WeChatBook(),
         Container(
           child: Text('3'),
         ),
@@ -82,9 +81,9 @@ class _HomeScreenState extends State<HomeScreen> {
             fontFamily:Constants.IconFontFamily,
           )
         ),
-        NavigationIconView(
+         NavigationIconView(
           title: '我',
-          icon:IconData(
+          icon: IconData(
             0xe606,
             fontFamily:Constants.IconFontFamily,
           ),
@@ -93,6 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
             fontFamily:Constants.IconFontFamily,
           )
         ),
+        
       ];
   }
 

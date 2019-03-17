@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Thu Mar 14 22:19:01 CST 2019
+#Sun Mar 17 18:20:04 CST 2019
 5.base=D\:\\wechat\\build\\app\\intermediates\\merged_assets\\debug\\mergeDebugAssets\\out
 22.path=flutter_assets/assets/images/ic_collections.png
 32.set=ASSET

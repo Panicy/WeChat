@@ -146,16 +146,23 @@ class WeChatViewDemo extends StatefulWidget {
 }
 
 class _WeChatViewDemoState extends State<WeChatViewDemo> {
+  final WechatData data=WechatData.mock();
   @override
   Widget build(BuildContext context) {
+    var mockConversation=data.conversation;
     return ListView.builder(
       itemBuilder: (BuildContext context,int index){
-        if(index==0){
-          return _TopList();
+        if(data.device != null){
+          if(index==0 ){
+                return _TopList(device: data.device,);
+              }
+          return Wechat(conversation:mockConversation[index-1]);
+        }else{
+          return Wechat(conversation:mockConversation[index]);
         }
-        return Wechat(conversation: mockConversations[index],);
+        
       },
-      itemCount: mockConversations.length,
+      itemCount: data.device!=null?mockConversation.length+1:mockConversation.length,
     );
   }
 }
@@ -163,8 +170,8 @@ class _WeChatViewDemoState extends State<WeChatViewDemo> {
 
 class _TopList extends StatelessWidget{
    const _TopList({  
-      this.device=Device.Win
-    }):assert(device !=null);
+      this.device,
+    });
 
     final Device device;
     int get iconName{
@@ -190,7 +197,7 @@ class _TopList extends StatelessWidget{
             ),
           ),
           SizedBox(width: 10.0),
-          Text( '$deviceName 已登录')
+         Text('$deviceName 已登录')
         ],
       ),
     );

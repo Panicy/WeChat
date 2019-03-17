@@ -8,6 +8,7 @@ class AppColors{
   static const TabIconNormal=0xff000000;//底部导航默认颜色
   static const AppBarTextColors=0xff000000;//头部导航字体颜色
   static const ConversationTitleColor=0xffECECEC;
+  static const BottomColor=0xff000000;
 }
 
 
@@ -49,4 +50,12 @@ class AppTextStyle{
 
 class Constants{
   static const IconFontFamily ='appIconFont';
+}
+
+//通讯录页面样式配置
+
+class WechatBook{
+  static const ImgSize=36.0;
+
+
 }

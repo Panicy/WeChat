@@ -39,7 +39,20 @@ bool isAvatarFromNet(){//判断头像是否来自网络
 }
 }
 
-const List<Conversation> mockConversations=[
+class WechatData{
+
+  const WechatData({
+    this.device,
+    this.conversation
+  });
+
+  final Device device;
+  final List<Conversation> conversation;
+
+  static mock(){
+    return WechatData(device: Device.Mac,conversation: mockConversations);
+  }
+  static List<Conversation> mockConversations=[
    const Conversation(
       img: 'assets/images/ic_file_transfer.png',
       title: '文件传输助手',
@@ -140,3 +153,5 @@ const List<Conversation> mockConversations=[
       mesnum: 0,
     ),
 ];
+
+}
