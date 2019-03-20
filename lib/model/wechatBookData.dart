@@ -1,6 +1,14 @@
 import 'package:flutter/cupertino.dart';
 
 
+//索引列表
+  const INDEX_BAR_WORDS = [
+    "↑", "☆",
+    "A", "B", "C", "D", "E", "F", "G",
+    "H", "I", "J", "K", "L", "M", "N",
+    "O", "P", "Q", "R", "S", "T", "U",
+    "V", "W", "X", "Y", "Z"
+  ];
 
 class WechatBookData{
 
@@ -16,6 +24,7 @@ class WechatBookData{
   final String img;
   final String titleIndex;
 }
+
 
 // 3.定义数据
 class WechatBookPageData{
@@ -105,6 +114,12 @@ class WechatBookPageData{
       title: '张益达',
       titleIndex: 'Z',
     ),
+    const WechatBookData(
+      img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1537858866&di=fe35e4465c73122f14e1c9475dd68e47&src=http://a2.att.hudong.com/63/26/01300001128119143503262347361.jpg',
+      title: '526',
+      titleIndex: '#',
+    ),
+
 
     
 
