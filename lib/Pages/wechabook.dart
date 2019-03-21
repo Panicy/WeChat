@@ -21,10 +21,19 @@ class WeChatBookItem extends StatelessWidget {
    final String titleIndex;
    final VoidCallback onPressed; //定义点击事件VoidCallback
 
-   bool get isImgFromNet{
-     return this.img.startsWith('http') || this.img.startsWith('https');
-   }
+    static const double PADDING_VERTICAL=10.0;
+    bool get isImgFromNet{
+      return this.img.startsWith('http') || this.img.startsWith('https');
+    }
   
+  //计算单个列表高度
+    static double _height(bool hasTitleIndex){
+      final _listHeight=PADDING_VERTICAL*2+1.0+40.0;
+      if(hasTitleIndex){
+        return _listHeight+20.0;
+      }
+      return _listHeight;
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +61,12 @@ class WeChatBookItem extends StatelessWidget {
           border: Border(bottom: BorderSide(width: 1.0,color: Color(AppColors.AppBarColor)))
         ),
       child:Container(
-        padding: EdgeInsets.fromLTRB(0, 10, 0, 10.0),
+        padding: EdgeInsets.symmetric(vertical: 10.0),
         child:  Row(
           children: <Widget>[
             imageUrl,
             SizedBox(width: 10.0,),
-            Text(title),
+            Text(title,style: TextStyle(fontSize: 16.0),),
           ],
         ), 
       ),
@@ -87,15 +96,12 @@ class WeChatBookItem extends StatelessWidget {
   }
 }
 
-
 class WeChatBook extends StatefulWidget {
   _WeChatBookState createState() => _WeChatBookState();
 }
 class _WeChatBookState extends State<WeChatBook> {
-
-  
-
-    
+  Color _indexTarBg=Colors.transparent;
+  ScrollController _scrollController;
   //定义数据类型List
   final WechatBookPageData itemdata=WechatBookPageData.mock();
   final List<WechatBookData> _itemdata =[];
@@ -131,6 +137,7 @@ class _WeChatBookState extends State<WeChatBook> {
     )
   ];
   
+  final Map _listPosMap={INDEX_BAR_WORDS[0]:0.0};
 
   @override
   void initState() {
@@ -138,13 +145,34 @@ class _WeChatBookState extends State<WeChatBook> {
     _itemdata..addAll(itemdata.wechatbookdata)..addAll(itemdata.wechatbookdata)..addAll(itemdata.wechatbookdata);
     // 排序
     _itemdata.sort((WechatBookData a, WechatBookData b)=>a.titleIndex.compareTo(b.titleIndex));
+    //视图滚动
+    _scrollController=new ScrollController();
 
+    //计算IndexBar 的字母索引与页面titleIndex的高度
+    var _totalPos=_iTopBookItem.length*WeChatBookItem._height(false);
+
+    for(int i=0;i<_itemdata.length;i++){
+      bool _hasTitleIndex=true;
+      if(i>0 && _itemdata[i].titleIndex.compareTo(_itemdata[i-1].titleIndex)==0){
+        _hasTitleIndex=false;
+      }
+      if(_hasTitleIndex){
+        _listPosMap[_itemdata[i].titleIndex]=_totalPos;
+      }
+      _totalPos += WeChatBookItem._height(_hasTitleIndex);
+    }
+
+  }
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
    //索引组件
    final List<Widget> _indexTabItem=INDEX_BAR_WORDS.map((String word){ //map遍历
      return Expanded(
-       child: Text(word,style:TextStyle(fontWeight: FontWeight.bold,fontSize: 22.0,color: Colors.black38)),
+       child: Text(word,style:TextStyle(fontWeight: FontWeight.bold,color: Colors.black38)),
      );
    }).toList();
 
@@ -154,6 +182,7 @@ class _WeChatBookState extends State<WeChatBook> {
     return Stack(
       children: <Widget>[
         ListView.builder(
+          controller: _scrollController,
           itemBuilder: (BuildContext context,int index){
             if(index<_iTopBookItem.length){
               return _iTopBookItem[index];
@@ -179,12 +208,38 @@ class _WeChatBookState extends State<WeChatBook> {
           top: 0,
           right: 0,
           bottom: 0,
-          child:Container(
-            child: Column(
-              children: _indexTabItem,
-            ),
-          ) ,
-        )
+          child: GestureDetector(
+            onVerticalDragDown: (DragDownDetails down){ //当一个触摸点开始跟屏幕交互，同时在垂直方向上移动时触发
+              print('down');
+              setState(() {
+                _indexTarBg=Colors.black26;
+               _scrollController.animateTo(_listPosMap['S'],duration:Duration(milliseconds: 200),curve: Curves.easeIn);
+               
+              });
+
+            },
+            onVerticalDragEnd: (DragEndDetails end){ //当用户停止移动，这个拖拽操作就被认为是完成了，就会触发这个回调
+              print('end');
+              setState(() {
+               _indexTarBg=Colors.transparent; 
+              });
+            },
+            onVerticalDragCancel: (){//用户突然停止拖拽时触发
+              print('scroll');
+               setState(() {
+               _indexTarBg=Colors.transparent; 
+              });
+            },
+            child:Container(
+              color:_indexTarBg,
+              child: Column(
+                children: _indexTabItem,
+              ),
+            ) ,
+          ),
+        ),
+        
+        
       ],
     );
   }
