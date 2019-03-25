@@ -97,6 +97,7 @@ class WeChatBookItem extends StatelessWidget {
 }
 
 class WeChatBook extends StatefulWidget {
+  String viewIndexZm='';
   _WeChatBookState createState() => _WeChatBookState();
 }
 class _WeChatBookState extends State<WeChatBook> {
@@ -169,6 +170,69 @@ class _WeChatBookState extends State<WeChatBook> {
     super.dispose();
   }
 
+  String getIndex(BuildContext context, double tileHeight, Offset globalPos){
+    RenderBox _box=context.findRenderObject();
+    var local=_box.globalToLocal(globalPos);
+    //clamp设置一个区间
+    int index=(local.dy ~/tileHeight).clamp(0, INDEX_BAR_WORDS.length-1);
+    print(index);
+    return INDEX_BAR_WORDS[index];
+  }
+  void _JumpToIndex(String index){
+    if(index.isNotEmpty){
+      final _pos=_listPosMap[index];
+      if(_pos!=null){
+        _scrollController.animateTo(_pos,duration:Duration(milliseconds: 200),curve: Curves.ease);
+      }
+    }
+
+  }
+
+
+  Widget _buidlIndexBar(BuildContext context,BoxConstraints constraints){
+    final totalHeight=constraints.biggest.height;
+    final double _tileHeight=totalHeight /_indexTabItem.length;
+    print(_tileHeight);
+    return GestureDetector(
+            onVerticalDragDown: (DragDownDetails down){ //当一个触摸点开始跟屏幕交互，同时在垂直方向上移动时触发
+              print('down');
+              setState(() {
+                _indexTarBg=Colors.black26;
+               widget.viewIndexZm=getIndex(context,_tileHeight,down.globalPosition);
+               _JumpToIndex(widget.viewIndexZm);
+              });
+
+            },
+            onVerticalDragEnd: (DragEndDetails end){ //当用户停止移动，这个拖拽操作就被认为是完成了，就会触发这个回调
+              print('end');
+              setState(() {
+                widget.viewIndexZm='';
+               _indexTarBg=Colors.transparent; 
+              });
+            },
+            onVerticalDragCancel: (){//用户突然停止拖拽时触发
+              print('scroll');
+               setState(() {
+                widget.viewIndexZm='';
+               _indexTarBg=Colors.transparent; 
+              });
+            },
+            onVerticalDragUpdate: (DragUpdateDetails details){
+               setState(() {
+                _indexTarBg=Colors.black26;
+               widget.viewIndexZm=getIndex(context,_tileHeight,details.globalPosition);
+               _JumpToIndex(widget.viewIndexZm);
+              });
+            },
+            child:Container(
+              color:_indexTarBg,
+              child: Column(
+                children: _indexTabItem,
+              ),
+            ) ,
+          );
+  }
+
    //索引组件
    final List<Widget> _indexTabItem=INDEX_BAR_WORDS.map((String word){ //map遍历
      return Expanded(
@@ -176,11 +240,25 @@ class _WeChatBookState extends State<WeChatBook> {
      );
    }).toList();
 
+
+  
+
   @override
   Widget build(BuildContext context) {
-   
-    return Stack(
-      children: <Widget>[
+   Widget _viewIndex=Center(
+          child: Container(
+            height:84.0,
+            width: 84.0,
+            decoration: BoxDecoration(
+            color: Colors.black54,
+            borderRadius: BorderRadius.circular(4.0)
+            ),
+            child: Center(
+              child: Text(widget.viewIndexZm,style: TextStyle(fontSize: 44.0,color: Colors.white,fontWeight: FontWeight.bold),),
+            ),
+          ),
+      );
+    final List<Widget> _body=[
         ListView.builder(
           controller: _scrollController,
           itemBuilder: (BuildContext context,int index){
@@ -203,44 +281,21 @@ class _WeChatBookState extends State<WeChatBook> {
           },
           itemCount: _itemdata.length+_iTopBookItem.length,
         ),
-        Positioned(
+      Positioned(
           width: 24.0,
           top: 0,
           right: 0,
           bottom: 0,
-          child: GestureDetector(
-            onVerticalDragDown: (DragDownDetails down){ //当一个触摸点开始跟屏幕交互，同时在垂直方向上移动时触发
-              print('down');
-              setState(() {
-                _indexTarBg=Colors.black26;
-               _scrollController.animateTo(_listPosMap['S'],duration:Duration(milliseconds: 200),curve: Curves.easeIn);
-               
-              });
-
-            },
-            onVerticalDragEnd: (DragEndDetails end){ //当用户停止移动，这个拖拽操作就被认为是完成了，就会触发这个回调
-              print('end');
-              setState(() {
-               _indexTarBg=Colors.transparent; 
-              });
-            },
-            onVerticalDragCancel: (){//用户突然停止拖拽时触发
-              print('scroll');
-               setState(() {
-               _indexTarBg=Colors.transparent; 
-              });
-            },
-            child:Container(
-              color:_indexTarBg,
-              child: Column(
-                children: _indexTabItem,
-              ),
-            ) ,
+          child:LayoutBuilder(
+            builder:_buidlIndexBar,
           ),
         ),
-        
-        
-      ],
-    );
+    ] ; 
+    if(widget.viewIndexZm.isNotEmpty){
+      _body.add(_viewIndex);
+    }
+    return Stack(
+      children:_body
+      );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'contants.dart' show Constants,AppColors;
 import './pages/wechat_page.dart';
 import './pages/wechabook.dart';
+import './pages/foundPage.dart';
 
 
 /*定义底部导航*/
@@ -38,11 +39,9 @@ class _HomeScreenState extends State<HomeScreen> {
       super.initState();
       _pageController=PageController(initialPage: _currentIndex);
       _pages=[
-       WeChatViewDemo(),
-       WeChatBook(),
-        Container(
-          child: Text('3'),
-        ),
+        WeChatViewDemo(),
+        WeChatBook(),
+        FoundPageDemo(),
         Container(
           child: Text('4'),
         ),
@@ -122,7 +121,11 @@ class _HomeScreenState extends State<HomeScreen> {
         )),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.search,color: Color(AppColors.AppBarTextColors),),
+            icon: Icon( IconData(
+              0xe656,
+              fontFamily:Constants.IconFontFamily
+            ),color: Colors.black,),
+            // icon: Icon(Icons.search,color: Color(AppColors.AppBarTextColors),),
             onPressed: (){},
           ),
           // IconButton(
@@ -155,7 +158,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ];
             },
-            icon: Icon(Icons.add,color: Color(AppColors.AppBarTextColors),),
+             icon: Icon( IconData(
+              0xe60b,
+              fontFamily:Constants.IconFontFamily
+            ),color: Colors.black,
+            ),
             onSelected: (String selected){
               print(selected);
             },
