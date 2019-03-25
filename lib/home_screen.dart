@@ -3,6 +3,7 @@ import 'contants.dart' show Constants,AppColors;
 import './pages/wechat_page.dart';
 import './pages/wechabook.dart';
 import './pages/foundPage.dart';
+import './Pages/wechat_my.dart';
 
 
 /*定义底部导航*/
@@ -42,9 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
         WeChatViewDemo(),
         WeChatBook(),
         FoundPageDemo(),
-        Container(
-          child: Text('4'),
-        ),
+        MyPageDemo(),
       ];
       _navigationIconViews=[
         NavigationIconView(
@@ -87,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
             fontFamily:Constants.IconFontFamily,
           ),
           activeIcon: IconData(
-            0xe607,
+            0xe606,
             fontFamily:Constants.IconFontFamily,
           )
         ),

@@ -1,4 +1,4 @@
-#Mon Mar 25 16:44:48 CST 2019
+#Mon Mar 25 22:04:36 CST 2019
 base.0=D\:\\wechat\\build\\app\\intermediates\\transforms\\dexMerger\\debug\\0
 path.0=classes.dex
 renamed.0=classes.dex

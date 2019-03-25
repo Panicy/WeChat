@@ -21,10 +21,9 @@ class ListDemo extends StatelessWidget {
           height: 50.0,
            child: Row(
               children: <Widget>[
-                SizedBox(width: 10.0,),
                 Image.asset(iconPath,width: 24.0,height: 24.0,),
                 SizedBox(width: 10.0,),
-                Text(title,style: TextStyle(fontWeight: FontWeight.bold),),
+                Text(title,style: TextStyle(fontWeight: FontWeight.w500),),
               ],
             ),
         );
